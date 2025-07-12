@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Förderverein Watoto: Afrikas starke Kinder e.V.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== PRELOADER STYLES ===== */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .preloader-logo {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .preloader-logo h1 {
+            font-size: 2.5rem;
+            color: #2c8a4a;
+            margin-bottom: 5px;
+        }
+        
+        .preloader-logo p {
+            font-size: 1.2rem;
+            color: #2c8a4a;
+            font-weight: bold;
+        }
+        
+        .spinner {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+        
+        .spinner-inner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 5px solid rgba(44, 138, 74, 0.2);
+            border-top-color: #2c8a4a;
+            border-radius: 50%;
+            animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+        
+        .spinner-inner:nth-child(1) {
+            animation-delay: -0.45s;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .spinner-inner:nth-child(2) {
+            animation-delay: -0.3s;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+        }
+        
+        .spinner-inner:nth-child(3) {
+            animation-delay: -0.15s;
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+        }
+        
+        .loading-text {
+            margin-top: 25px;
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* ===== NAVIGATION VARIABLES ===== */
+        :root {
+            --nav-primary: #2563eb;
+            --nav-dark: #1e293b;
+            --nav-light: #f8fafc;
+            --nav-green: #2c8a4a;
+        }
+        
+        /* ===== GENERAL STYLES ===== */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER & NAVIGATION STYLES ===== */
+        header {
+            background-color: #2c8a4a;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: 80px;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            padding-right: 10px;
+        }
+            
+        .logo h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .logo p {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight:bold;
+            color: white;
+            white-space: nowrap;
+            display: block;
+        }
+        
+        /* Desktop Navigation */
+        .desktop-nav {
+            display: none;
+            gap: 1.5rem;
+            align-items: center;
+            margin-right: 0px;
+            margin-left: 280px;
+        }
+
+        .desktop-nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            white-space: nowrap;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .desktop-nav a:hover {
+            color: #f0f0f0;
+        }
+
+        .desktop-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .desktop-nav a:hover::after {
+            width: 100%;
+        }
+
+        nav {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+                        
+        nav ul {
+            list-style: none;
+            display: flex;
+            position: fixed;
+            top: 80px;
+            left: -100%;
+            width: 100%;
+            height: calc(100vh - 80px);
+            background-color: #2c8a4a;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 40px;
+            transition: left 0.3s ease;
+            z-index: 1000;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul.active {
+            left: 0;
+        }
+            
+        nav li {
+            width: 100%;
+            justify-content: center;
+            display: flex;
+            align-items: center;
+        }
+                    
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            padding: 15px 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+                    
+        nav a:hover {
+            color: #f0f0f0;
+        }
+                            
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+                                    
+        nav a:hover::after {
+            width: 100%;
+        }
+                                                
+        .hamburger {
+            display: block;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: white;
+            padding-left: 30px;
+            padding-right: 100px;
+            order: 1;
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 1.9rem;
+            }
+                    
+            .logo p {
+                font-size: 0.9rem;
+                display: block;
+            }
+                        
+            header {
+                padding: 0 10px;
+            }
+            
+            .hamburger {
+                padding: 40px;
+            }
+            
+            /* Preloader adjustments for mobile */
+            .preloader-logo h1 {
+                font-size: 1.8rem;
+            }
+            
+            .preloader-logo p {
+                font-size: 1rem;
+            }
+            
+            .loading-text {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1rem;
+            }
+                                    
+            .logo p {
+                font-size: 0.6rem;
+            }
+            
+            /* Preloader adjustments for small mobile */
+            .preloader-logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .preloader-logo p {
+                font-size: 0.8rem;
+            }
+            
+            .spinner {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .loading-text {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Desktop-specific styles */
+        @media (min-width: 769px) {
+            .desktop-nav {
+                display: flex;
+            }
+            
+            .hamburger {
+                order: 1;
+            }
+            
+            header {
+                justify-content: space-between;
+                padding: 0 40px;
+            }
+        }
+
+        /* ===== MAIN CONTENT ADJUSTMENT ===== */
+        main {
+            margin-top: 80px;
+        }
+
+        /* ===== REST OF THE STYLES ===== */
+        /* Main Content */
+        .main-image {
+            width: 100%;
+            max-height: auto;
+            object-fit: contain;
+        }
+
+        /* About Section */
+        .about {
+            padding: 3rem 1rem;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .about h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #2c8a4a;
+        }
+        
+        .about p {
+            font-size:1.1rem;
+            line-height:1.8;
+            color:#444;
+            max-width:800px;
+            margin:0 auto 2rem;
+            text-align:left;
+            padding:0 1rem;
+        }
+                            
+        
+                                                                                                
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+                                                                                                        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+                                                                                                                    
+        .footer-section h3 {
+            margin-bottom: 1rem;
+        }
+                                                                                                                                
+        .footer-social a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="preloader-logo">
+            <h1>Förderverein Watoto</h1>
+            <p>Afrikas starke Kinder e.V.</p>
+        </div>
+        <div class="spinner">
+            <div class="spinner-inner"></div>
+            <div class="spinner-inner"></div>
+            <div class="spinner-inner"></div>
+        </div>
+        <div class="loading-text">Laden...</div>
+    </div>
+
+    <header>
+        <div class="logo">
+            <h1>Förderverein Watoto</h1>
+            <p>Afrikas starke Kinder e.V.</p>
+        </div>
+
+        <div class="desktop-nav">
+            <a href="index.html">Home</a>
+            <a href="derverein.html">Der Verein</a>
+            <a href="rundbriefe.html">Rundbriefe</a>
+            <a href="partner.html">Partner</a>
+            <a href="highlights.html">Highlights</a>
+            <a href="verschiedenes.html">Verschiedenes</a>
+        </div>
+
+        <nav aria-label="Hauptnavigation">
+            <ul id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="derverein.html">Der Verein</a></li>
+                <li><a href="rundbriefe.html">Rundbriefe</a></li>
+                <li><a href="partner.html">Partner</a></li>
+                <li><a href="highlights.html">Highlights</a></li>
+                <li><a href="verschiedenes.html">Verschiedenes</a></li>
+            </ul>
+        </nav>
+
+        <div class="hamburger" id="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+
+    <main>
+        <img class="main-image" 
+             src="pictures/Verschiedenes_Kinder Kudho Primary 2017_formatted.jpg" 
+             alt="Klassenraum mit afrikanischen Kindern beim Lernen">
+
+        <section class="about">
+            <h2>Verschiedenes</h2>
+            <p>Diese Seite befindet sich noch im Aufbau.<br><br>
+Danke für Ihr Interesse an unserem
+<strong>Förderverein Watoto: Afrikas starke Kinder e.V.</strong></p>
+            
+        </div>            
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Kontakt</h3>
+                <p>Förderverein Watoto: Afrikas starke Kinder e.V.<br>Beringstr. 20, D-53115 Bonn<br><br>
+                    <i class="fas fa-envelope"></i> info@afrikas-starke-kinder.de</p>
+            </div>
+            <div class="footer-section">
+                <h3>Spendenkonto</h3>
+                <p>DE71 4306 0967 4028 309 00<br>
+                GLS Gemeinschaftsbank e.G.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Impressum</h3>
+                <p>Dr. Heike Höffler<br>Beringstr. 20, D-53115 Bonn<br><br>
+                <i class="fas fa-envelope"></i> info@afrikas-starke-kinder.de</p>
+            </div>
+        </div>
+        <p>&copy; 2025 Förderverein Watoto: Afrikas starke Kinder e.V.</p>
+    </footer>
+    
+    <script>
+        // Preloader functionality
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            
+            // Add fade-out effect
+            setTimeout(function() {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+            }, 600); // 0.6 seconds
+        });
+
+        // Navigation toggle for all screen sizes
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            
+            hamburger.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                
+                // Change icon
+                const icon = hamburger.querySelector('i');
+                if (navLinks.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Close menu when clicking on a link
+            const navItems = navLinks.querySelectorAll('a');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    const icon = hamburger.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+        });
+    </script>
+</body>
+  </html>
